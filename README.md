@@ -1,3 +1,5 @@
 # Seed Processing 2021
 
 This repo is a workflow with the [targets](https://cran.r-project.org/web/packages/targets/vignettes/overview.html) package to (mostly) automate the file management and data analysis for our 2021 growing/2022 seed processing season. It uses functions from the [snfR](https://github.com/jhgille2/snfR) package I'm working on to help to simplify things. Probably the best way to use this repo is to clone it into RStudio like is described [in sections 16.1 and 16.2 here](https://happygitwithr.com/existing-github-first.html). Then, run the code in the packages.R file and run tar_make() in the console. You can also see a visualization of the workflow by running tar_visnetwork() in the console.
+
+There is minimal R code in this repository since I made most of the functions in the snfR package specifically so that I could use them for something like this. That being said, the packages I use here can be found in the packages.R file, the \_targets.R file describes the workflow, and the R folder has helper functions/functions I haven't added to the package yet.  
