@@ -18,11 +18,15 @@ tar_plan(
              format = "file"),
 
   tar_target(nir_files,
-             list.files(here("data", "leadsheets"), full.names = TRUE),
+             list.files(here("data", "nir"), full.names = TRUE),
              format = "file"),
 
   tar_target(test_weight_files,
              list.files(here("data", "test_weight"), full.names = TRUE),
+             format = "file"),
+
+  tar_target(nir_masterfile,
+             here("data", "nir_masterfile_2021_yield.csv"),
              format = "file"),
 
 
@@ -34,10 +38,14 @@ tar_plan(
              clean_yield_files(yield_files)),
 
   tar_target(cleaned_nir_files,
-             clean_nir_files(nir_files)),
+             clean_nir_files(files = nir_files, nir_masterfile = nir_masterfile)),
 
   tar_target(cleaned_test_weight,
-             clean_test_weight(test_weight_files))
+             clean_test_weight(test_weight_files)),
+
+  # Merge the yield/field notes, nir, and test weight data
+  tar_target(merged_data,
+             merge_all_data(yield = cleaned_yield_files, nir = cleaned_nir_files, twt = cleaned_test_weight))
 
 
 

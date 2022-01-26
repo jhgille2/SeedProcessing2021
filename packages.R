@@ -9,6 +9,7 @@ pacman::p_load(conflicted,
                targets,
                tarchetypes,
                tidyverse,
-               here)
+               here,
+               readxl)
 
 pacman::p_load_gh("jhgille2/snfR")
