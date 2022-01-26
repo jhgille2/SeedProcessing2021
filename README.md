@@ -1,1 +1,3 @@
-# SeedProcessing2021
+# Seed Processing 2021
+
+This repo is a workflow that (mostly) automates the file management and data analysis for our 2021 growing/2022 seed processing season. It uses functions from the (snfR)[https://github.com/jhgille2/snfR] package I'm working on to help to simplify things. Probably the best way to use this repo is to clone it into RStudio like is described (in sections 16.1 and 16.2 here)[https://happygitwithr.com/existing-github-first.html]. Then, run the code in the packages.R file and run tar_make() in the console. You can also see a visualization of the workflow by running tar_visnetwork() in the console.
