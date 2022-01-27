@@ -9,6 +9,11 @@ pacman::p_load(conflicted,
                targets,
                tarchetypes,
                tidyverse,
-               here)
+               here,
+               ggthemes,
+               openxlsx,
+               magrittr)
+
+conflict_prefer("filter", "dplyr")
 
 pacman::p_load_gh("jhgille2/snfR")

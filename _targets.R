@@ -45,7 +45,14 @@ tar_plan(
 
   # Merge the yield/field notes, nir, and test weight data
   tar_target(merged_data,
-             merge_all_data(yield = cleaned_yield_files, nir = cleaned_nir_files, twt = cleaned_test_weight))
+             merge_all_data(yield = cleaned_yield_files,
+                            nir = cleaned_nir_files,
+                            twt = cleaned_test_weight)),
+
+  # Pivot this merged data by phenotype and filter the observations so that only the samples
+  # that a phenotype shouldve been collected for are kept
+  tar_target(pivoted_phenotype_data,
+             pivot_and_filter(phenotype_data = merged_data, leadsheets = cleaned_lead_sheets))
 
 
 
