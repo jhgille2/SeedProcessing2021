@@ -45,6 +45,13 @@ na_prop <- function(data)
   sum(is.na(data$value))/nrow(data)
 }
 
+tar_load(pivoted_phenotype_data)
+
+pivoted_phenotype_data %>%
+  mutate(na_pct = map_dbl(data, na_prop)) %>%
+  select(-data) %>%
+  pivot_wider(names_from = trait, values_from = na_pct)
+
 
 ggplot(data = filter(merged_longer, test == "HIF 5"), aes(x = value)) +
   facet_grid(~trait + test, scales = "free") +
