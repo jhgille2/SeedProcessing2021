@@ -52,7 +52,12 @@ tar_plan(
   # Pivot this merged data by phenotype and filter the observations so that only the samples
   # that a phenotype shouldve been collected for are kept
   tar_target(pivoted_phenotype_data,
-             pivot_and_filter(phenotype_data = merged_data, leadsheets = cleaned_lead_sheets))
+             pivot_and_filter(phenotype_data = merged_data, leadsheets = cleaned_lead_sheets)),
+
+  # Export the merged tests to excel workbooks
+  tar_target(test_exports,
+             export_test_workbooks(merged_data, export_directory = here("exports", "yield_files")),
+             format = "file")
 
 
 
