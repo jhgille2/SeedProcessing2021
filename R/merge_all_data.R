@@ -14,7 +14,7 @@ merge_all_data <- function(yield = cleaned_yield_files, nir =
 
   MergedData <- yield %>%
     mutate(loc = toupper(loc)) %>%
-    filter(loc == "PLY") %>%
+    #filter(loc == "PLY") %>%
     left_join(nir, by = c("test", "genotype", "loc", "rep", "year", "code", "plot")) %>%
     left_join(twt, by = c("test", "genotype", "loc", "rep", "year")) %>%
     distinct() %>%

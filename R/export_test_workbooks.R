@@ -86,4 +86,9 @@ export_test_workbooks <- function(merged_data, export_directory =
   # Apply this function to the merged_split list and use the names of the list
   # (the test names) to name the files
   purrr::walk2(merged_split, names(merged_split), make_excel_workbook)
+
+  # Get the filepaths to all the saved workbooks
+  all_workbook_paths <- paste0(export_directory, "/", names(merged_split), ".xlsx")
+
+  return(all_workbook_paths)
 }

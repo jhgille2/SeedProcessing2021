@@ -40,6 +40,9 @@ tar_plan(
   tar_target(cleaned_nir_files,
              clean_nir_files(files = nir_files, nir_masterfile = nir_masterfile)),
 
+  tar_target(nir_errors,
+             check_nir_errors(nif_df = cleaned_nir_files)),
+
   tar_target(cleaned_test_weight,
              clean_test_weight(test_weight_files)),
 
@@ -53,6 +56,8 @@ tar_plan(
   # that a phenotype shouldve been collected for are kept
   tar_target(pivoted_phenotype_data,
              pivot_and_filter(phenotype_data = merged_data, leadsheets = cleaned_lead_sheets)),
+
+
 
   # Export the merged tests to excel workbooks
   tar_target(test_exports,
