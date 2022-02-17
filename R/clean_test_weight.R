@@ -28,7 +28,8 @@ clean_test_weight <- function(files = NULL) {
     dplyr::rename_at(vars(moisture:date_time), function(x) paste0("twt_", x)) %>%
     tidyr::separate(sample_id, into = c("plot", "genotype", "test", "loc", "year", "rep"), sep = "_") %>%
     dplyr::select(test, genotype, test, loc, year, rep, twt_moisture, twt_weight, twt_temperature, twt_date_time) %>%
-    dplyr::mutate(year = as.numeric(year))
+    dplyr::mutate(year = as.numeric(year)) %>%
+    distinct()
 
   return(all_test_weight_data)
 }

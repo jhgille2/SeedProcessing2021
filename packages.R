@@ -12,7 +12,9 @@ pacman::p_load(conflicted,
                here,
                ggthemes,
                openxlsx,
-               magrittr)
+               magrittr,
+               lme4,
+               emmeans)
 
 conflict_prefer("filter", "dplyr")
 
