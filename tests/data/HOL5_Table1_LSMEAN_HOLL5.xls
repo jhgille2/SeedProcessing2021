@@ -1,0 +1,611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta name="Generator" content="SAS Software Version 9.4, see www.sas.com">
+<meta http-equiv="Content-type" content="text/html; charset=windows-1252">
+<title>SAS Output</title>
+<style type="text/css">
+<!--
+.batch
+{
+  border: 1px solid #000000;
+  border-collapse: separate;
+  border-spacing: 1px;
+  font-family: 'courier new';
+}
+.bycontentfolder
+{
+  margin-left: 6pt;
+}
+.bylinecontainer
+{
+  width: 100%;
+}
+.contentfolder
+{
+  margin-left: 6pt;
+}
+.contentitem
+{
+  margin-left: 6pt;
+}
+.contents
+{
+}
+.folderaction
+{
+  margin-left: 6pt;
+}
+.graph
+{
+  border: 1px solid #000000;
+  border-collapse: separate;
+  border-spacing: 1px;
+}
+.indexaction
+{
+  margin-left: 6pt;
+}
+.indexitem
+{
+  margin-left: 6pt;
+}
+.list
+{
+  list-style-type: disc;
+}
+.list10
+{
+  list-style-type: square;
+}
+.list2
+{
+  list-style-type: circle;
+}
+.list3
+{
+  list-style-type: square;
+}
+.list4
+{
+  list-style-type: square;
+}
+.list5
+{
+  list-style-type: square;
+}
+.list6
+{
+  list-style-type: square;
+}
+.list7
+{
+  list-style-type: square;
+}
+.list8
+{
+  list-style-type: square;
+}
+.list9
+{
+  list-style-type: square;
+}
+.listitem
+{
+  list-style-type: disc;
+}
+.listitem10
+{
+  list-style-type: square;
+}
+.listitem2
+{
+  list-style-type: circle;
+}
+.listitem3
+{
+  list-style-type: square;
+}
+.listitem4
+{
+  list-style-type: square;
+}
+.listitem5
+{
+  list-style-type: square;
+}
+.listitem6
+{
+  list-style-type: square;
+}
+.listitem7
+{
+  list-style-type: square;
+}
+.listitem8
+{
+  list-style-type: square;
+}
+.listitem9
+{
+  list-style-type: square;
+}
+.output
+{
+  border: 1px solid #000000;
+  border-collapse: separate;
+  border-spacing: 1px;
+}
+.pages
+{
+}
+.pagesitem
+{
+  margin-left: 6pt;
+}
+.systitleandfootercontainer
+{
+  width: 100%;
+}
+.table
+{
+  border: 1px solid #000000;
+  border-collapse: separate;
+  border-spacing: 1px;
+}
+.top_stacked_value
+{
+  padding-bottom: 1px;
+  border: 0;
+}
+.middle_stacked_value
+{
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border: 0;
+}
+.bottom_stacked_value
+{
+  padding-top: 1px;
+  border: 0;
+}
+.titleandnotecontainer
+{
+  width: 100%;
+}
+.l {text-align: left }
+.c {text-align: center }
+.r {text-align: right }
+.d {text-align: right }
+.j {text-align: justify }
+.t {vertical-align: top }
+.m {vertical-align: middle }
+.b {vertical-align: bottom }
+TD, TH {vertical-align: top }
+.stacked_cell{padding: 0 }
+-->
+</style>
+<script language="javascript" type="text/javascript">
+<!-- 
+function startup(){
+
+}
+function shutdown(){
+
+}
+
+//-->
+</script>
+
+</head>
+<body onload="startup()" onunload="shutdown()" class="body">
+
+<script language="javascript" type="text/javascript">
+<!-- 
+var _info = navigator.userAgent
+var _ie = (_info.indexOf("MSIE") > 0
+          && _info.indexOf("Win") > 0
+          && _info.indexOf("Windows 3.1") < 0);
+var _ie64 = _info.indexOf("x64") > 0
+
+//-->
+</script>
+
+<div class="branch">
+<a name="IDX1"></a>
+<table class="systitleandfootercontainer" width="100%" border="0" summary="Page Layout">
+<tr>
+<td class="c systemtitle">   Summary of HOL5 test data in 2020</td>
+</tr>
+<tr>
+<td class="c systemtitle2"> Table 1 - LSMEANS and observed means</td>
+</tr>
+<tr>
+<td class="c systemtitle3"> Local Preliminary Holliday Mut MG:5-  PLY,  Feb.12th, 2021 </td>
+</tr>
+</table><br>
+<div>
+<div align="center">
+<table class="table" cellspacing="1" cellpadding="7" rules="all" frame="box" border="1" bordercolor="#C1C1C1" summary="Procedure Tabulate: Table 1">
+<colgroup>
+<col>
+</colgroup>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="c m header" rowspan="3" scope="col">Code Genotypes</th>
+<th class="c header" colspan="9" scope="colgroup">LSMEANS  by Location</th>
+<th class="c header" colspan="2" scope="colgroup">  MEANS  by Location   </th>
+</tr>
+<tr>
+<th class="c header" colspan="9" scope="colgroup"> PLYMOUTH, NC 2020</th>
+<th class="c header" colspan="2" scope="colgroup"> PLYMOUTH, NC 2020</th>
+</tr>
+<tr>
+<th class="c header" scope="col">Plant Height<br/>(inch)  </th>
+<th class="c header" scope="col">Maturity Date<br/>Oct.1=1</th>
+<th class="c header" scope="col">Meal (%)  <br/>          </th>
+<th class="c header" scope="col">Protein (13%M)<br/>      </th>
+<th class="c header" scope="col">Protein+oil<br/>(13%M)   </th>
+<th class="c header" scope="col">Oil (13%M)<br/>          </th>
+<th class="c header" scope="col">Seed Size (g/100)<br/>   </th>
+<th class="c header" scope="col">Seed Quality<br/>        </th>
+<th class="c header" scope="col">Seed Yield<br/>(Bu/Ac)   </th>
+<th class="c header" scope="col">FLOWER COLOR</th>
+<th class="c header" scope="col">PUBESCENCE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="l t rowheader" scope="row"> 1 N19-1503         </th>
+<td class="r b data">  20.0</td>
+<td class="r b data">  36.0</td>
+<td class="r b data">  51.3</td>
+<td class="r b data">  20.5</td>
+<td class="r b data">  58.0</td>
+<td class="r b data">  37.5</td>
+<td class="r b data">  12.6</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  30.1</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row"> 2 N19-1506         </th>
+<td class="r b data">  25.5</td>
+<td class="r b data">  40.5</td>
+<td class="r b data">  50.1</td>
+<td class="r b data">  19.7</td>
+<td class="r b data">  56.7</td>
+<td class="r b data">  37.0</td>
+<td class="r b data">  13.9</td>
+<td class="r b data">   1.8</td>
+<td class="r b data">  31.1</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row"> 3 N19-1512         </th>
+<td class="r b data">  24.0</td>
+<td class="r b data">  42.5</td>
+<td class="r b data">  49.2</td>
+<td class="r b data">  19.9</td>
+<td class="r b data">  56.1</td>
+<td class="r b data">  36.3</td>
+<td class="r b data">  12.9</td>
+<td class="r b data">   1.8</td>
+<td class="r b data">  37.2</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row"> 4 N19-1523         </th>
+<td class="r b data">  24.0</td>
+<td class="r b data">  41.5</td>
+<td class="r b data">  51.5</td>
+<td class="r b data">  18.7</td>
+<td class="r b data">  57.2</td>
+<td class="r b data">  38.5</td>
+<td class="r b data">  11.7</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  37.0</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   1.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row"> 5 N19-1525         </th>
+<td class="r b data">  28.0</td>
+<td class="r b data">  39.0</td>
+<td class="r b data">  48.6</td>
+<td class="r b data">  19.2</td>
+<td class="r b data">  55.3</td>
+<td class="r b data">  36.2</td>
+<td class="r b data">  11.1</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  37.2</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   1.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row"> 6 N19-1538         </th>
+<td class="r b data">  17.0</td>
+<td class="r b data">  38.5</td>
+<td class="r b data">  49.2</td>
+<td class="r b data">  19.4</td>
+<td class="r b data">  55.9</td>
+<td class="r b data">  36.5</td>
+<td class="r b data">  11.6</td>
+<td class="r b data">   2.3</td>
+<td class="r b data">  29.2</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   1.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row"> 7 N19-1539         </th>
+<td class="r b data">  17.0</td>
+<td class="r b data">  39.0</td>
+<td class="r b data">  49.6</td>
+<td class="r b data">  19.2</td>
+<td class="r b data">  56.1</td>
+<td class="r b data">  36.8</td>
+<td class="r b data">  12.3</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  24.9</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   1.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row"> 8 N19-1547         </th>
+<td class="r b data">  23.0</td>
+<td class="r b data">  43.0</td>
+<td class="r b data">  51.9</td>
+<td class="r b data">  20.2</td>
+<td class="r b data">  58.3</td>
+<td class="r b data">  38.1</td>
+<td class="r b data">  14.4</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  35.5</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row"> 9 N19-1551         </th>
+<td class="r b data">  26.0</td>
+<td class="r b data">  40.5</td>
+<td class="r b data">  50.9</td>
+<td class="r b data">  19.1</td>
+<td class="r b data">  57.0</td>
+<td class="r b data">  37.9</td>
+<td class="r b data">  11.3</td>
+<td class="r b data">   2.3</td>
+<td class="r b data">  33.6</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   1.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">10 N19-1572         </th>
+<td class="r b data">  24.0</td>
+<td class="r b data">  43.0</td>
+<td class="r b data">  51.2</td>
+<td class="r b data">  19.7</td>
+<td class="r b data">  57.5</td>
+<td class="r b data">  37.9</td>
+<td class="r b data">  14.5</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  39.5</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">11 N19-1585         </th>
+<td class="r b data">  20.0</td>
+<td class="r b data">  40.0</td>
+<td class="r b data">  50.6</td>
+<td class="r b data">  19.1</td>
+<td class="r b data">  56.7</td>
+<td class="r b data">  37.7</td>
+<td class="r b data">  14.4</td>
+<td class="r b data">   1.8</td>
+<td class="r b data">  33.3</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">12 N19-1586         </th>
+<td class="r b data">  26.0</td>
+<td class="r b data">  45.0</td>
+<td class="r b data">  50.1</td>
+<td class="r b data">  19.7</td>
+<td class="r b data">  56.7</td>
+<td class="r b data">  37.0</td>
+<td class="r b data">  15.3</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  41.0</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">13 N19-1628         </th>
+<td class="r b data">  22.0</td>
+<td class="r b data">  47.5</td>
+<td class="r b data">  50.1</td>
+<td class="r b data">  19.6</td>
+<td class="r b data">  56.7</td>
+<td class="r b data">  37.0</td>
+<td class="r b data">  12.6</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  36.0</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">14 N19-1634         </th>
+<td class="r b data">  26.5</td>
+<td class="r b data">  45.0</td>
+<td class="r b data">  50.7</td>
+<td class="r b data">  19.2</td>
+<td class="r b data">  56.9</td>
+<td class="r b data">  37.7</td>
+<td class="r b data">  15.0</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  39.9</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">15 N19-1641         </th>
+<td class="r b data">  22.0</td>
+<td class="r b data">  45.0</td>
+<td class="r b data">  49.1</td>
+<td class="r b data">  20.1</td>
+<td class="r b data">  56.2</td>
+<td class="r b data">  36.1</td>
+<td class="r b data">  14.4</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  38.7</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">16 N19-1643         </th>
+<td class="r b data">  25.5</td>
+<td class="r b data">  44.5</td>
+<td class="r b data">  50.0</td>
+<td class="r b data">  18.9</td>
+<td class="r b data">  56.2</td>
+<td class="r b data">  37.3</td>
+<td class="r b data">  14.1</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  38.3</td>
+<td class="r b data">   1.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">17 N19-1653         </th>
+<td class="r b data">  21.0</td>
+<td class="r b data">  41.0</td>
+<td class="r b data">  49.2</td>
+<td class="r b data">  19.4</td>
+<td class="r b data">  55.9</td>
+<td class="r b data">  36.5</td>
+<td class="r b data">  13.5</td>
+<td class="r b data">   2.5</td>
+<td class="r b data">  35.4</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   1.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">18 NC-Miller        </th>
+<td class="r b data">  24.0</td>
+<td class="r b data">  44.0</td>
+<td class="r b data">  47.9</td>
+<td class="r b data">  20.3</td>
+<td class="r b data">  55.4</td>
+<td class="r b data">  35.1</td>
+<td class="r b data">  13.7</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  39.2</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   1.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">19 N16-1296         </th>
+<td class="r b data">  26.0</td>
+<td class="r b data">  45.0</td>
+<td class="r b data">  49.6</td>
+<td class="r b data">  19.9</td>
+<td class="r b data">  56.5</td>
+<td class="r b data">  36.5</td>
+<td class="r b data">  14.2</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  34.4</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   2.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">20 Osage            </th>
+<td class="r b data">  24.5</td>
+<td class="r b data">  37.5</td>
+<td class="r b data">  53.5</td>
+<td class="r b data">  18.4</td>
+<td class="r b data">  58.5</td>
+<td class="r b data">  40.2</td>
+<td class="r b data">  11.1</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  39.4</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">   1.0</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">  1 replicate 1     </th>
+<td class="r b data">  22.7</td>
+<td class="r b data">  40.3</td>
+<td class="r b data">  50.2</td>
+<td class="r b data">  19.6</td>
+<td class="r b data">  56.8</td>
+<td class="r b data">  37.2</td>
+<td class="r b data">  13.1</td>
+<td class="r b data">   2.0</td>
+<td class="r b data">  34.9</td>
+<td class="r b data">   1.5</td>
+<td class="r b data">   1.6</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">  2 replicate 2     </th>
+<td class="r b data">  24.0</td>
+<td class="r b data">  43.6</td>
+<td class="r b data">  50.3</td>
+<td class="r b data">  19.4</td>
+<td class="r b data">  56.7</td>
+<td class="r b data">  37.3</td>
+<td class="r b data">  13.2</td>
+<td class="r b data">   2.1</td>
+<td class="r b data">  35.8</td>
+<td class="r b data">   1.5</td>
+<td class="r b data">   1.6</td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">  3 replicate 3     </th>
+<td class="r b data">&nbsp;</td>
+<td class="r b data">&nbsp;</td>
+<td class="r b data">  50.1</td>
+<td class="r b data">  19.5</td>
+<td class="r b data">  56.6</td>
+<td class="r b data">  37.1</td>
+<td class="r b data">  13.5</td>
+<td class="r b data">&nbsp;</td>
+<td class="r b data">  36.0</td>
+<td class="r b data">   1.5</td>
+<td class="r b data">   1.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<br>
+<table class="systitleandfootercontainer" width="100%" border="0" summary="Page Layout">
+<tr>
+<td class="c systemfooter"> Residuals and LSMEANS calculated after out-of-range values (raw data) and outliers were deleted.</td>
+</tr>
+<tr>
+<td class="c systemfooter2"> CODE for COLOR: 1=white, 2=purple, 4=mixture/segregation.</td>
+</tr>
+<tr>
+<td class="c systemfooter3"> CODE for PUBESCENCE: 1=gray, 2=tawny, 4=mixture/segregation.</td>
+</tr>
+</table><br>
+</div>
+</body>
+</html>

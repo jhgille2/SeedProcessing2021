@@ -29,6 +29,12 @@ tar_plan(
              here("data", "nir_masterfile_2021_yield.csv"),
              format = "file"),
 
+  # A file to correct test weight genotype names that were
+  # incorrectly entered
+  tar_target(twt_genotype_corrections,
+             here("data", "twt_no_match_corrections.csv"),
+             format = "file"),
+
 
   # Clean up the leadsheets, yield, nir, and test weight files
   tar_target(cleaned_lead_sheets,
@@ -50,14 +56,17 @@ tar_plan(
   tar_target(merged_data,
              merge_all_data(yield = cleaned_yield_files,
                             nir = cleaned_nir_files,
-                            twt = cleaned_test_weight)),
+                            twt = cleaned_test_weight,
+                            twt_corrections = twt_genotype_corrections)),
 
   # Pivot this merged data by phenotype and filter the observations so that only the samples
-  # that a phenotype shouldve been collected for are kept
+  # that a phenotype should've been collected for are kept
   tar_target(pivoted_phenotype_data,
              pivot_and_filter(phenotype_data = merged_data, leadsheets = cleaned_lead_sheets)),
 
-
+  # Use the pivoted data to calculate lsmeans by test/trait
+  tar_target(phenotype_lsmeans,
+             calculate_lsmeans(phenotype_data = pivoted_phenotype_data)),
 
   # Export the merged tests to excel workbooks
   tar_target(test_exports,

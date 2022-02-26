@@ -18,7 +18,7 @@ clean_nir_files <- function(files = NULL, nir_masterfile = NULL) {
       dplyr::mutate(year = ifelse(stringr::str_detect(year, stringr::regex("nir", ignore.case = TRUE)), NA, year)) %>%
       dplyr::select(nir_no, date_time_of_analysis, moisture, oil_dry_basis, protein_dry_basis) %>%
       dplyr::left_join(nir_lookup, by = c("nir_no" = "NIR_No")) %>%
-      dplyr::select(test, cross, Rows, color, plant_no, loc, year, moisture, oil_dry_basis, protein_dry_basis) %>%
+      dplyr::select(test, cross, Rows, color, plant_no, loc, year, moisture, nir_no, oil_dry_basis, protein_dry_basis) %>%
       dplyr::rename(code = cross, plot = Rows, rep = color, genotype = plant_no)
 
     return(nir_df)
@@ -29,6 +29,12 @@ clean_nir_files <- function(files = NULL, nir_masterfile = NULL) {
     purrr::reduce(dplyr::bind_rows) %>%
     dplyr::distinct()
 
-  return(CleanedFiles)
+  # Do some error checking and remove obvious errors from the merged NIR data
+  # These obvious errors are any observations with negative values for
+  # moisture, oil, or protein. Other more subtle (potential) errors will be identified
+  # in a separate step
+  Cleaned_no_negative <- CleanedFiles %>%
+    filter(oil_dry_basis > 0 & protein_dry_basis > 0 &  moisture > 0 & !is.na(nir_no))
 
+  return(Cleaned_no_negative)
 }

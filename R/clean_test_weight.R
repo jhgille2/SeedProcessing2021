@@ -28,8 +28,13 @@ clean_test_weight <- function(files = NULL) {
     dplyr::rename_at(vars(moisture:date_time), function(x) paste0("twt_", x)) %>%
     tidyr::separate(sample_id, into = c("plot", "genotype", "test", "loc", "year", "rep"), sep = "_") %>%
     dplyr::select(test, genotype, test, loc, year, rep, twt_moisture, twt_weight, twt_temperature, twt_date_time) %>%
-    dplyr::mutate(year = as.numeric(year)) %>%
-    distinct()
+    dplyr::mutate(year = as.numeric(year),
+                  test = str_replace(test, "lp holl 5", "LP HOLL 5"),
+                  genotype = str_replace(genotype, "n19-1512", "N19-1512"),
+                  loc = toupper(loc)) %>%
+    distinct() %>%
+    filter(as.numeric(rep) < 5) %>%
+    filter(!(test %in% c("HIF 5", "HIF 6") & as.numeric(rep) >= 4))
 
   return(all_test_weight_data)
 }

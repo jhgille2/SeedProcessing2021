@@ -132,6 +132,10 @@ by_loc_means <- pivoted_phenotype_data %>%
 # in the "data" column
 overall_means <- pivoted_phenotype_data %>%
   unnest(data) %>%
+  group_by(test) %>%
+  mutate(n_locs = length(unique(loc))) %>%
+  ungroup() %>%
+  filter(n_locs > 1) %>%
   group_by(test, trait) %>%
   nest() %>%
   mutate(overall_means = map(data, Model_Overall))
@@ -148,6 +152,7 @@ pheno_key <- c(ht                = "Height (cm)",
                protein_dry_basis = "Protein (dry basis)",
                twt_weight        = "Test weight")
 
+# The cleaned by-location marginal means
 by_loc_clean <- by_loc_means %>%
   select(loc, test, trait, by_loc_means) %>%
   mutate(trait = recode(trait, !!!pheno_key)) %>%
@@ -157,6 +162,7 @@ by_loc_clean <- by_loc_means %>%
               names_sort  = TRUE,
               values_from = LSMean)
 
+# The cleaned overall means
 overall_clean <- overall_means %>%
   select(test, trait, overall_means) %>%
   mutate(trait = recode(trait, !!!pheno_key)) %>%
@@ -165,3 +171,17 @@ overall_clean <- overall_means %>%
               names_sep   = " - ",
               names_sort  = TRUE,
               values_from = LSMean)
+
+# And finally, the two datasets can be joined by test and genotype
+lsmeans_final <- left_join(by_loc_clean, overall_clean, by = c("test", "genotype"))
+
+
+## Section: Whats next?
+##################################################
+#
+# Next will be the functions to prepare the data to be exported to excel workbooks.
+# In the past, the excel workbooks have had some special formatting where cells
+# above each location lsmeans are merged and then laballed with the location
+# name. I'll have to work with the openxlsx package to do the formatting.
+# I think getting the formats from the past workbooks and then baking styles
+# in openxlsx would be a good way to go about doing this.
