@@ -70,14 +70,85 @@ lsmeans_final_report <- function(test, data){
   means_sheet_name <- paste(test, "LSMeans", sep = " - ")
   addWorksheet(wb, sheetName = means_sheet_name)
 
-  data_start_row <- 7
+  data_start_row <- 3
   header_merge_start_row <- data_start_row - 1
 
-  # Write the lsmeans data starting on line 7
-  openxlsx::writeData(wb, means_sheet_name, data, startRow = data_start_row)
+  # Make styles to apply to different cell ranges based on the type of
+  # data they hold
 
-  # Get the indices of the by-location columns to merge and what etxt to put in them
+  # STyle for the lsmeans
+  lsmeans_data_style <- openxlsx::createStyle(fontSize    = 11,
+                                              border      = "TopBottomLeftRight",
+                                              borderStyle = "thin",
+                                              halign      = "right")
+
+  # style for the headers and genotypes
+  lsmeans_header_style <- openxlsx::createStyle(fontSize       = 11,
+                                                border         = "TopBottomLeftRight",
+                                                borderStyle    = "thin",
+                                                textDecoration = "bold",
+                                                halign         = "center")
+
+  # Starting and ending rows of the lsmeans data
+  lsmeans_start_row <- data_start_row + 1
+  lsmeans_end_row   <- data_start_row + nrow(data)
+
+  # Get the indices of the by-location columns to merge and what text to put in them
   merge_indices <- get_loc_merge_columns(data)
+
+  # Write the lsmeans data starting on line 7 and apply the lsmeans style to it
+
+  # First, remopve locations from the column names
+  # A function to remove location names from column names
+  remove_loc <- function(colname){
+
+    split_name <- str_split(colname, " - ")[[1]]
+
+    ifelse(length(split_name) == 2, split_name[[2]], split_name[[1]])
+
+  }
+  colnames(data) <- map_chr(colnames(firstrow$data[[3]]), remove_loc)
+
+  openxlsx::writeData(wb, means_sheet_name, data, startRow = data_start_row)
+  openxlsx::addStyle(wb, means_sheet_name,
+                     style = lsmeans_data_style,
+                     cols = 2:ncol(data),
+                     gridExpand = TRUE,
+                     rows = lsmeans_start_row:lsmeans_end_row)
+
+  # Add the header style to the header and the genotype column
+  openxlsx::addStyle(wb, means_sheet_name,
+                     style = lsmeans_header_style,
+                     cols = 2:ncol(data),
+                     gridExpand = TRUE,
+                     rows = header_merge_start_row)
+
+  openxlsx::addStyle(wb, means_sheet_name,
+                     style      = lsmeans_header_style,
+                     cols       = 1:ncol(data),
+                     gridExpand = TRUE,
+                     rows       = data_start_row)
+
+  openxlsx::addStyle(wb, means_sheet_name,
+                     style      = lsmeans_header_style,
+                     cols       = 1,
+                     gridExpand = TRUE,
+                     rows       = lsmeans_start_row:lsmeans_end_row)
+
+  # Starting and ending rows of the lsmeans data
+  lsmeans_start_row <- data_start_row + 1
+  lsmeans_end_row   <- data_start_row + nrow(data)
+
+  # Set the column widths so that they can fit the widths of the data
+  width_vec     <- apply(data, 2, function(x) max(nchar(as.character(x)) + 2, na.rm = TRUE))
+  col_width_vec <- map_dbl(colnames(data), function(x) nchar(x))
+
+  width_vec <- map2_dbl(width_vec, col_width_vec, max)
+
+  setColWidths(wb,
+               means_sheet_name,
+               cols   = 1:ncol(data),
+               widths = width_vec)
 
   for(i in 1:length(merge_indices)){
 
@@ -85,12 +156,21 @@ lsmeans_final_report <- function(test, data){
     # and one row above the data header
     location_means_name <- names(merge_indices)[[i]]
 
+    # Add the header style to the cell the location name is going to
+    addStyle(wb,
+             means_sheet_name,
+             style = lsmeans_header_style,
+             rows = header_merge_start_row,
+             cols = merge_indices[[i]][[1]])
+
+    # Write the location name to this cell
     writeData(wb,
               means_sheet_name,
               location_means_name,
               startCol = merge_indices[[i]][[1]],
               startRow = header_merge_start_row)
 
+    # Find the cells to merge and then merge them
     merge_cols <- c(merge_indices[[i]][[1]]:merge_indices[[i]][[2]])
 
     mergeCells(wb,
@@ -107,4 +187,6 @@ lsmeans_final_report <- function(test, data){
 
 firstrow <- means_bytest[1:3, ]
 
+
 pmap(firstrow, lsmeans_final_report)
+

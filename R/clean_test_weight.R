@@ -34,7 +34,9 @@ clean_test_weight <- function(files = NULL) {
                   loc = toupper(loc)) %>%
     distinct() %>%
     filter(as.numeric(rep) < 5) %>%
-    filter(!(test %in% c("HIF 5", "HIF 6") & as.numeric(rep) >= 4))
+    filter(!(test %in% c("HIF 5", "HIF 6") & as.numeric(rep) >= 4)) %>%
+    group_by(test, genotype, loc, rep) %>%
+    top_n(1, twt_date_time)
 
   return(all_test_weight_data)
 }

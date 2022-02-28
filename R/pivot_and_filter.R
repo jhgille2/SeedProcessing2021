@@ -11,6 +11,9 @@
 pivot_and_filter <- function(phenotype_data = merged_data, leadsheets =
                              cleaned_lead_sheets) {
 
+  phenotype_data %<>%
+    mutate(p_o = oil_dry_basis + protein_dry_basis)
+
   # The phenotypes to pivot
   measure_vars <- c("ht",
                     "yield",
@@ -18,7 +21,10 @@ pivot_and_filter <- function(phenotype_data = merged_data, leadsheets =
                     "sq",
                     "oil_dry_basis",
                     "protein_dry_basis",
-                    "twt_weight")
+                    "twt_weight",
+                    "p_o",
+                    "md",
+                    "lod")
 
   # pivot the merged data using these variables
   merged_longer <- phenotype_data %>%
@@ -29,9 +35,9 @@ pivot_and_filter <- function(phenotype_data = merged_data, leadsheets =
   # for protein and oil seperately
   prot_oil_table <- leadsheets$`Merged tables`$`Data to collect` %>% dplyr::filter(trait == "protein/oil")
 
-  new_prot_oil_table <- tibble(trait = c(rep("oil_dry_basis", nrow(prot_oil_table)), rep("protein_dry_basis", nrow(prot_oil_table))),
-                               reps_to_measure = rep(prot_oil_table$reps_to_measure, 2),
-                               test_name = rep(prot_oil_table$test_name, 2))
+  new_prot_oil_table <- tibble(trait = c(rep("oil_dry_basis", nrow(prot_oil_table)), rep("protein_dry_basis", nrow(prot_oil_table)), rep("p_o", nrow(prot_oil_table))),
+                               reps_to_measure = rep(prot_oil_table$reps_to_measure, 3),
+                               test_name = rep(prot_oil_table$test_name, 3))
 
   new_sdwt_table <- leadsheets$`Merged tables`$`Plot techniques` %>%
     filter(component == "reps") %>%

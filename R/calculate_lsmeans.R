@@ -75,7 +75,7 @@ calculate_lsmeans <- function(phenotype_data = pivoted_phenotype_data) {
           emmeans("genotype") %>%
           as.data.frame() %>%
           dplyr::select(genotype, emmean) %>%
-          mutate(emmean = round(emmean, 2)) %>%
+          mutate(emmean = round(emmean, 1)) %>%
           rename(LSMean = emmean)
       },
 
@@ -121,12 +121,15 @@ calculate_lsmeans <- function(phenotype_data = pivoted_phenotype_data) {
   # from dplyr to do this
 
   # Make a key to rename phenotypes
-  pheno_key <- c(ht                = "Height (cm)",
+  pheno_key <- c(ht                = "Height (inches)",
                  yield             = "Yield (grams)",
                  sdwt              = "Seed weight (grams)",
                  oil_dry_basis     = "Oil (dry basis)",
                  protein_dry_basis = "Protein (dry basis)",
-                 twt_weight        = "Test weight")
+                 twt_weight        = "Test weight",
+                 p_o               = "Protein + Oil",
+                 lod               = "Lodging",
+                 md                = "Maturity Date")
 
   # The cleaned by-location marginal means
   by_loc_clean <- by_loc_means %>%
@@ -149,8 +152,8 @@ calculate_lsmeans <- function(phenotype_data = pivoted_phenotype_data) {
                 values_from = LSMean)
 
   # And finally, the two datasets can be joined by test and genotype
-  lsmeans_final <- left_join(by_loc_clean, overall_clean, by = c("test", "genotype"))
-
+  lsmeans_final <- left_join(by_loc_clean, overall_clean, by = c("test", "genotype")) %>%
+    rename(Genotype = genotype)
 
   return(lsmeans_final)
 }

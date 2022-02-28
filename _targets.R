@@ -71,6 +71,10 @@ tar_plan(
   # Export the merged tests to excel workbooks
   tar_target(test_exports,
              export_test_workbooks(merged_data, export_directory = here("exports", "yield_files")),
+             format = "file"),
+
+  tar_target(LSMeans_exports,
+           export_lsmean_workbooks(phenotype_lsmeans, export_directory = here("exports", "lsmean_files")),
              format = "file")
 
 
