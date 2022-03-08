@@ -181,7 +181,52 @@ lsmeans_final <- left_join(by_loc_clean, overall_clean, by = c("test", "genotype
 #
 # Next will be the functions to prepare the data to be exported to excel workbooks.
 # In the past, the excel workbooks have had some special formatting where cells
-# above each location lsmeans are merged and then laballed with the location
+# above each location lsmeans are merged and then labelled with the location
 # name. I'll have to work with the openxlsx package to do the formatting.
 # I think getting the formats from the past workbooks and then baking styles
 # in openxlsx would be a good way to go about doing this.
+
+## Section: Multiyear data analysis
+##################################################
+
+Model_Multiyear <- function(MultiyearData){
+
+
+  tryCatch(
+    {
+      # Make sure that genotype, location, and rep are factors
+      OverallData %<>%
+        select(value, year, genotype, loc, rep) %>%
+        mutate(genotype = as.factor(genotype),
+               loc      = as.factor(loc),
+               rep      = as.factor(rep),
+               year     = as.factor(year))
+
+      # Fit the model
+      Model <- with(OverallData, lme4::lmer(value ~ genotype + (1|loc) + (1|year) + (1|loc:year) + (1|genotype:loc) + (1|genotype:loc:year)))
+
+      # Get the genotype marginal means from the model
+      Model %>%
+        emmeans("genotype") %>%
+        as.data.frame() %>%
+        dplyr::select(genotype, emmean) %>%
+        mutate(emmean = round(emmean, 2)) %>%
+        rename(LSMean = emmean)
+    },
+
+    # If the is an error when the model is being fit, return a NA value for
+    # each genotype marginal means to make it easier to find problematic data
+    # without clogging up the rest iof the analysis
+    error = function(cnd) {
+      OverallData %>%
+        dplyr::select(genotype) %>%
+        group_by(genotype) %>%
+        sample_n(1) %>%
+        ungroup() %>%
+        mutate(LSMean = NA) -> EmptyData
+
+      return(EmptyData)
+    }
+  )
+
+}

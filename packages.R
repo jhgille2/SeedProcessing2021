@@ -14,7 +14,8 @@ pacman::p_load(conflicted,
                openxlsx,
                magrittr,
                lme4,
-               emmeans)
+               emmeans,
+               readxl)
 
 conflict_prefer("filter", "dplyr")
 

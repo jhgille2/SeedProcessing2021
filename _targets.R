@@ -75,7 +75,24 @@ tar_plan(
 
   tar_target(LSMeans_exports,
            export_lsmean_workbooks(phenotype_lsmeans, export_directory = here("exports", "lsmean_files")),
-             format = "file")
+             format = "file"),
+
+
+  ## Section: Merging with the data from 2020 and doing a combined analysis
+  ##################################################
+
+  # The 2020 yield files
+  tar_target(yield_2020_files,
+             list.files(here("data", "yield_2020"), full.names = TRUE),
+             format = "file"),
+
+  # Read in and merge these files
+  tar_target(yield_2020,
+             merge_2020_data(yield_2020_files)),
+
+  # COmbine the 2020 data with the 2021 data
+  tar_target(multiyear_data,
+             merge_multiyear_data(data_2020 = yield_2020, data_2021 = merged_data))
 
 
 
