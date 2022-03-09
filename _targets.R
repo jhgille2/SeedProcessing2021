@@ -82,17 +82,28 @@ tar_plan(
   ##################################################
 
   # The 2020 yield files
-  tar_target(yield_2020_files,
-             list.files(here("data", "yield_2020"), full.names = TRUE),
+  tar_target(yield_2020_file,
+             here("data", "yield_2020", "Mian_Yield_2020.xlsx"),
+             format = "file"),
+
+  # The leadsheets from 2020
+  tar_target(leadsheets_2020_files,
+             list.files(here("data", "leadsheets_2020"), full.names = TRUE),
              format = "file"),
 
   # Read in and merge these files
   tar_target(yield_2020,
-             merge_2020_data(yield_2020_files)),
+             clean_yield_2020(yield_2020_file)),
 
-  # COmbine the 2020 data with the 2021 data
+  # Combine the 2020 data with the 2021 data
   tar_target(multiyear_data,
-             merge_multiyear_data(data_2020 = yield_2020, data_2021 = merged_data))
+             merge_multiyear_data(data_2020 = yield_2020, data_2021 = merged_data)),
+
+  # Calculate the lsmeans for the combnined data
+  tar_target(combined_lsmeans,
+             calculate_combined_lsmeans(combined_data   = multiyear_data,
+                                        leadsheets_2021 = cleaned_lead_sheets,
+                                        leadsheets_2020 = leadsheets_2020_files))
 
 
 

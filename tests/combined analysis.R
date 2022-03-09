@@ -36,7 +36,7 @@ clean_data_to_collect <- function(leadsheets){
   # for protein and oil seperately
   prot_oil_table <- leadsheets$`Merged tables`$`Data to collect` %>% dplyr::filter(trait == "protein/oil")
 
-  new_prot_oil_table <- tibble(trait = c(rep("oil_dry_basis", nrow(prot_oil_table)), rep("protein_dry_basis", nrow(prot_oil_table)), rep("p_o", nrow(prot_oil_table))),
+  new_prot_oil_table <- tibble(trait = c(rep("oil_dry_basis", nrow(prot_oil_table)), rep("protein_dry_basis", nrow(prot_oil_table)), rep("po", nrow(prot_oil_table))),
                                reps_to_measure = rep(prot_oil_table$reps_to_measure, 3),
                                test_name = rep(prot_oil_table$test_name, 3))
 
@@ -90,15 +90,99 @@ clean_data_to_collect <- function(leadsheets){
 data_to_collect_2020 <- clean_data_to_collect(cleaned_lead_sheets_2020)
 data_to_collect_2021 <- clean_data_to_collect(cleaned_lead_sheets)
 
-# The traits I want to fit a model on
+combined_data_to_collect <- bind_rows(data_to_collect_2020, data_to_collect_2021)
 
-measurement_variables <- c("sq",
-                           "sdwt",
-                           "md",
+# The traits I want to fit a model on
+measurement_variables <- c("md",
                            "ht",
+                           "lod",
                            "yield",
+                           "sdwt",
+                           "sq",
                            "protein_dry_basis",
                            "oil_dry_basis",
                            "po")
 
-#
+# Pivot the data by these measurement variables and then join to the combined data
+# to collect tables so the expected number of reps can be added as an
+# additional column
+pivoted_multiyear_data <- multiyear_data %>%
+  pivot_longer(cols = measurement_variables, names_to = "trait") %>%
+  left_join(combined_data_to_collect, by = c("trait", "test", "year")) %>%
+  filter(as.numeric(rep) <= reps_to_measure) %>%
+  select(-reps_to_measure) %>%
+  group_by(trait) %>%
+  nest()
+
+# And here is a function to fit the model
+combined_model <- function(Data){
+
+  tryCatch(
+    {
+      # Make sure that genotype, location, and rep are factors
+      Data %<>%
+        select(value, genotype, loc, rep, year) %>%
+        mutate(genotype = as.factor(genotype),
+               loc      = as.factor(loc),
+               rep      = as.factor(rep),
+               year     = as.factor(year))
+
+      # y = mu + G + L + Y(L) + R(L:Y) + GL + GY(L) + error
+
+      # Fit the model
+      Model <- with(Data, lme4::lmer(value ~ genotype  + (1|loc)+ (1|loc:year) + (1|year:loc:rep) + (1|genotype:loc) + (1|genotype:year:loc)))
+
+      # Get the genotype marginal means from the model
+      Model %>%
+        emmeans("genotype") %>%
+        as.data.frame() %>%
+        dplyr::select(genotype, emmean) %>%
+        mutate(emmean = round(emmean, 1)) %>%
+        rename(LSMean = emmean)
+    },
+
+    # If the is an error when the model is being fit, return a NA value for
+    # each genotype marginal means to make it easier to find problematic data
+    # without clogging up the rest iof the analysis
+    error = function(cnd) {
+      Data %>%
+        dplyr::select(genotype) %>%
+        group_by(genotype) %>%
+        sample_n(1) %>%
+        ungroup() %>%
+        mutate(LSMean = NA) -> EmptyData
+
+      return(EmptyData)
+    }
+  )
+
+}
+
+
+library(furrr)
+library(future)
+
+plan("multisession", workers = 5)
+
+combined_ememans <- pivoted_multiyear_data %>%
+  mutate(pheno_emmean = future_map(data, combined_model))
+
+pheno_key <- c(ht                = "Height (inches)",
+               yield             = "Yield (bu/acre)",
+               sdwt              = "Seed weight (grams)",
+               oil_dry_basis     = "Oil (dry basis)",
+               protein_dry_basis = "Protein (dry basis)",
+               po                = "Protein + Oil",
+               lod               = "Lodging",
+               md                = "Maturity Date",
+               sq                = "Seed quality")
+
+combined_lsmeans_data <- combined_ememans %>%
+  select(-data) %>%
+  unnest(pheno_emmean) %>%
+  mutate(trait = recode(trait, !!!pheno_key)) %>%
+  pivot_wider(names_from = trait, values_from = LSMean) %>%
+  arrange(desc(`Yield (bu/acre)`))
+
+
+openxlsx::write.xlsx(combined_lsmeans_data, here("exports", "combined_lsmeans.xlsx"))

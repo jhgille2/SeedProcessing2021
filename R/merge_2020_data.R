@@ -16,3 +16,4 @@ merge_2020_data <- function(yield_2020_files) {
   return(all_2020_data)
 
 }
+
