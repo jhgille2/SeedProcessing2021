@@ -111,7 +111,7 @@ pivoted_multiyear_data <- multiyear_data %>%
   left_join(combined_data_to_collect, by = c("trait", "test", "year")) %>%
   filter(as.numeric(rep) <= reps_to_measure) %>%
   select(-reps_to_measure) %>%
-  group_by(trait) %>%
+  group_by(trait, test) %>%
   nest()
 
 # And here is a function to fit the model

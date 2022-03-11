@@ -4,7 +4,11 @@
 #'
 #' @title
 #' @param combined_data
-calculate_combined_lsmeans <- function(combined_data = multiyear_data, leadsheets_2021 = cleaned_lead_sheets, leadsheets_2020 = leadsheets_2020_files) {
+#' @param leadsheets_2021
+#' @param leadsheets_2020
+pivot_multiyear_data <- function(combined_data = multiyear_data,
+                                 leadsheets_2021 = cleaned_lead_sheets,
+                                 leadsheets_2020 = leadsheets_2020_files) {
 
   # First, clean up the lead sheets from 2020
   cleaned_lead_sheets_2020 <- clean_lead_sheets(files = leadsheets_2020)
@@ -86,78 +90,13 @@ calculate_combined_lsmeans <- function(combined_data = multiyear_data, leadsheet
   # to collect tables so the expected number of reps can be added as an
   # additional column
   pivoted_multiyear_data <- combined_data %>%
+    mutate(loc = paste(loc, year, sep = " - ")) %>%
     pivot_longer(cols = measurement_variables, names_to = "trait") %>%
     left_join(combined_data_to_collect, by = c("trait", "test", "year")) %>%
     filter(as.numeric(rep) <= reps_to_measure) %>%
     select(-reps_to_measure) %>%
-    group_by(trait) %>%
+    group_by(test, loc, trait) %>%
     nest()
 
-  # And here is a function to fit the model
-  combined_model <- function(Data){
-
-    tryCatch(
-      {
-        # Make sure that genotype, location, and rep are factors
-        Data %<>%
-          select(value, genotype, loc, rep, year) %>%
-          mutate(genotype = as.factor(genotype),
-                 loc      = as.factor(loc),
-                 rep      = as.factor(rep),
-                 year     = as.factor(year))
-
-        # y = mu + G + L + Y(L) + R(L:Y) + GL + GY(L) + error
-
-        # Fit the model
-        Model <- with(Data, lme4::lmer(value ~ genotype  + (1|loc)+ (1|loc:year) + (1|year:loc:rep) + (1|genotype:loc) + (1|genotype:year:loc)))
-
-        # Get the genotype marginal means from the model
-        Model %>%
-          emmeans("genotype") %>%
-          as.data.frame() %>%
-          dplyr::select(genotype, emmean) %>%
-          mutate(emmean = round(emmean, 1)) %>%
-          rename(LSMean = emmean)
-      },
-
-      # If the is an error when the model is being fit, return a NA value for
-      # each genotype marginal means to make it easier to find problematic data
-      # without clogging up the rest iof the analysis
-      error = function(cnd) {
-        Data %>%
-          dplyr::select(genotype) %>%
-          group_by(genotype) %>%
-          sample_n(1) %>%
-          ungroup() %>%
-          mutate(LSMean = NA) -> EmptyData
-
-        return(EmptyData)
-      }
-    )
-
-  }
-
-  combined_ememans <- pivoted_multiyear_data %>%
-    mutate(pheno_emmean = map(data, combined_model))
-
-  pheno_key <- c(ht                = "Height (inches)",
-                 yield             = "Yield (bu/acre)",
-                 sdwt              = "Seed weight (grams)",
-                 oil_dry_basis     = "Oil (dry basis)",
-                 protein_dry_basis = "Protein (dry basis)",
-                 po                = "Protein + Oil",
-                 lod               = "Lodging",
-                 md                = "Maturity Date",
-                 sq                = "Seed quality")
-
-  # Apply the modeling function to the data to get the LSMeans,
-  # and then pivot to add a column for each of the phenotypes
-  combined_lsmeans_data <- combined_ememans %>%
-    select(-data) %>%
-    unnest(pheno_emmean) %>%
-    mutate(trait = recode(trait, !!!pheno_key)) %>%
-    pivot_wider(names_from = trait, values_from = LSMean) %>%
-    arrange(test, desc(`Yield (bu/acre)`))
-
-  return(combined_lsmeans_data)
+  return(pivoted_multiyear_data)
 }

@@ -99,11 +99,25 @@ tar_plan(
   tar_target(multiyear_data,
              merge_multiyear_data(data_2020 = yield_2020, data_2021 = merged_data)),
 
+  # Pivot the multiyear data to match the format of the pivoted phenotype data for the
+  # single year data
+  tar_target(multiyear_data_pivoted,
+             pivot_multiyear_data(combined_data   = multiyear_data,
+                                  leadsheets_2021 = cleaned_lead_sheets,
+                                  leadsheets_2020 = leadsheets_2020_files)),
+
   # Calculate the lsmeans for the combnined data
+  # tar_target(combined_lsmeans,
+  #            calculate_combined_lsmeans(combined_data   = multiyear_data,
+  #                                       leadsheets_2021 = cleaned_lead_sheets,
+  #                                       leadsheets_2020 = leadsheets_2020_files))
+
   tar_target(combined_lsmeans,
-             calculate_combined_lsmeans(combined_data   = multiyear_data,
-                                        leadsheets_2021 = cleaned_lead_sheets,
-                                        leadsheets_2020 = leadsheets_2020_files))
+             calculate_lsmeans(phenotype_data = multiyear_data_pivoted)),
+
+  tar_target(combined_LSMeans_exports,
+             export_lsmean_workbooks_combined(phenotype_lsmeans = combined_lsmeans, export_directory = here("exports", "combined_lsmeans")),
+             format = "file")
 
 
 

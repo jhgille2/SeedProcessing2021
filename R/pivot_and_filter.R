@@ -47,7 +47,7 @@ pivot_and_filter <- function(phenotype_data = merged_data, leadsheets =
            reps_to_measure = value)
 
   new_sq_table <- leadsheets$`Merged tables`$`Data to collect` %>%
-    filter(trait == "saeed quality") %>%
+    filter(trait == "seed quality") %>%
     mutate(reps_to_measure = 2)
 
   # Also add test weight to the traits to measure (same number of reps as sdwt)

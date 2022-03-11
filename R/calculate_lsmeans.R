@@ -129,7 +129,8 @@ calculate_lsmeans <- function(phenotype_data = pivoted_phenotype_data) {
                  twt_weight        = "Test weight",
                  p_o               = "Protein + Oil",
                  lod               = "Lodging",
-                 md                = "Maturity Date")
+                 md                = "Maturity Date",
+                 po                = "Protein + Oil")
 
   # The cleaned by-location marginal means
   by_loc_clean <- by_loc_means %>%
